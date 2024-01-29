@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -10,6 +10,7 @@ import {
   Text,
   Button,
   useToast,
+  Checkbox,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -18,6 +19,7 @@ import EditTaskForm from "./editTaskForm";
 const TodoListItem = ({ task, onTaskDeleted, onTaskEdited }) => {
   const taskID = task._id;
   const toast = useToast();
+  const [isChecked, setIsChecked] = useState(task.isDone);
 
   const deleteTask = async () => {
     try {
@@ -42,6 +44,23 @@ const TodoListItem = ({ task, onTaskDeleted, onTaskEdited }) => {
     }
   };
 
+  const toggleCheckbox = async () => {
+    try {
+      const response = await axios.put(`/api/task/${taskID}`, {
+        isDone: !isChecked,
+      });
+      const updatedTask = response.data;
+      setIsChecked(updatedTask.isDone);
+    } catch (error) {
+      toast({
+        title: "Error Updating Task Status.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <Card m="8px">
       <CardHeader>
@@ -54,6 +73,13 @@ const TodoListItem = ({ task, onTaskDeleted, onTaskEdited }) => {
             alignItems="center"
             justifyContent="space-between"
           >
+            <Checkbox
+              m="8px"
+              size="lg"
+              colorScheme="orange"
+              isChecked={isChecked}
+              onChange={toggleCheckbox}
+            />
             <Text fontSize="sm">{task.body}</Text>
             <Box alignItems="center" display="flex">
               <EditTaskForm task={task} onTaskEdited={onTaskEdited} />
