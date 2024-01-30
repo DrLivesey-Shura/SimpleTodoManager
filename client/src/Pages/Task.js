@@ -1,4 +1,4 @@
-import { Box, useToast } from "@chakra-ui/react";
+import { Box, CardBody, Spinner, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import TodoListItem from "../Components/TodoListItem";
 import axios from "axios";
@@ -8,7 +8,7 @@ import AddTaskForm from "../Components/addTaskForm";
 const Task = () => {
   const [tasks, setTasks] = useState([]);
   const toast = useToast();
-
+  const [loading, setLoading] = useState(true);
   const handleTaskDeleted = (taskId) => {
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
   };
@@ -31,6 +31,7 @@ const Task = () => {
       const fetchedTasks = response.data;
 
       setTasks(fetchedTasks);
+      setLoading(false);
     } catch (err) {
       toast({
         title: "Error fetching the projects.",
@@ -58,14 +59,33 @@ const Task = () => {
           </Heading>
           <AddTaskForm onTaskAdded={handleTaskAdd} />
         </CardHeader>
-        {tasks.map((task) => (
-          <TodoListItem
-            key={task._id}
-            task={task}
-            onTaskDeleted={handleTaskDeleted}
-            onTaskEdited={handleTaskEdit}
-          />
-        ))}
+        {loading ? (
+          <Box
+            m="16px"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+          >
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Box>
+        ) : (
+          <CardBody m="12px">
+            {tasks.map((task) => (
+              <TodoListItem
+                key={task._id}
+                task={task}
+                onTaskDeleted={handleTaskDeleted}
+                onTaskEdited={handleTaskEdit}
+              />
+            ))}
+          </CardBody>
+        )}
       </Card>
     </Box>
   );
