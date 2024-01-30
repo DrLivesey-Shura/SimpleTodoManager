@@ -2,10 +2,11 @@ const Task = require("../Models/Task");
 
 const createTask = async (req, res) => {
   try {
-    const { title, body } = req.body;
-    const newTask = await Task.create({ title, body });
+    const { description } = req.body;
+    const newTask = await Task.create({ description });
     res.status(201).json(newTask);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -21,14 +22,12 @@ const getTasks = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const { title, body } = req.body;
+    const newData = req.body;
     const taskId = req.params.id;
 
-    const updatedTask = await Task.findByIdAndUpdate(
-      taskId,
-      { title, body },
-      { new: true }
-    );
+    const updatedTask = await Task.findByIdAndUpdate(taskId, newData, {
+      new: true,
+    });
 
     if (!updatedTask) {
       return res.status(404).json({ error: "Task not found" });
