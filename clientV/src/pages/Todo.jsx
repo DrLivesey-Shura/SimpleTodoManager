@@ -17,6 +17,7 @@ const Todo = () => {
   const handleInputChange = (e) => {
     setDescription(e.target.value);
   };
+
   const handleAddTask = () => {
     if (description === "") return;
     fetch("/api/task", {
