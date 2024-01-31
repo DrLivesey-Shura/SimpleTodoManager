@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/task", TaskRoutes);
+app.use("/task", TaskRoutes);
 
 // Connection
 const PORT = process.env.PORT || 5000;
