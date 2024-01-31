@@ -19,15 +19,15 @@ import { EditIcon } from "@chakra-ui/icons";
 
 const EditTaskForm = ({ task, onTaskEdited }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [title, setTitle] = useState(task.title);
+  const [body, setBody] = useState(task.body);
   const toast = useToast();
 
   const editTask = async () => {
     try {
       const response = await axios.put(`/api/task/${task._id}`, {
-        title,
-        body,
+        title: title || task.title,
+        body: body || task.body,
       });
       const updatedTask = response.data;
 

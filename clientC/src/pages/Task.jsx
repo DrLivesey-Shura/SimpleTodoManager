@@ -1,4 +1,4 @@
-import { Box, CardBody, Spinner, useToast } from "@chakra-ui/react";
+import { Box, Button, CardBody, Spinner, useToast } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import TodoListItem from "../Components/TodoListItem";
 import axios from "axios";
@@ -25,11 +25,10 @@ const Task = () => {
     setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
-  const getTasks = useCallback(async () => {
+  const getTasks = async () => {
     try {
       const response = await axios.get("/api/task/");
       const fetchedTasks = response.data;
-
       setTasks(fetchedTasks);
       setLoading(false);
     } catch (err) {
@@ -40,11 +39,11 @@ const Task = () => {
         isClosable: true,
       });
     }
-  }, [toast]);
+  };
 
   useEffect(() => {
     getTasks();
-  }, [getTasks]);
+  }, []);
 
   return (
     <Box

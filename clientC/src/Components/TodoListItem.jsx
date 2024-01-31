@@ -61,44 +61,6 @@ const TodoListItem = ({ task, onTaskDeleted, onTaskEdited }) => {
   };
 
   return (
-    // <Card m="8px" maxW="md">
-    //   <Box position="relative" padding="10">
-    //     <CardHeader display="flex" justifyContent="center">
-    //       <Heading size="md">{task.title}</Heading>
-    //     </CardHeader>
-    //     <Divider />
-    //   </Box>
-    //   <CardBody>
-    //     <Stack divider={<StackDivider />} spacing="1">
-    //       <Box
-    //         display="flex"
-    //         alignItems="center"
-    //         justifyContent="space-between"
-    //       >
-    //         <Checkbox
-    //           m="8px"
-    //           size="lg"
-    //           colorScheme="orange"
-    //           isChecked={isChecked}
-    //           onChange={toggleCheckbox}
-    //         />
-    //         <Text fontSize="md">{task.body}</Text>
-    //         <Box alignItems="center" display="flex">
-    //           <EditTaskForm task={task} onTaskEdited={onTaskEdited} />
-    //           <Button
-    //             onClick={() => {
-    //               deleteTask();
-    //             }}
-    //             bg="none"
-    //             mr="4px"
-    //           >
-    //             <DeleteIcon color="tomato" fontSize="20px" />
-    //           </Button>
-    //         </Box>
-    //       </Box>
-    //     </Stack>
-    //   </CardBody>
-    // </Card>
     <Card
       direction={{ base: "column", sm: "row" }}
       overflow="hidden"
